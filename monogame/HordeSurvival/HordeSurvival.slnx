@@ -1,0 +1,9 @@
+﻿<Solution>
+    <Project Path="HordeSurvival.Core/HordeSurvival.Core.csproj"/>
+    <Project Path="HordeSurvival.DesktopGL/HordeSurvival.DesktopGL.csproj"/>
+    <Project Path="HordeSurvival.DesktopVK/HordeSurvival.DesktopVK.csproj"/>
+    <!--    <Project Path="HordeSurvival.Android/HordeSurvival.Android.csproj" />-->
+    <Project Path="HordeSurvival.Content/HordeSurvival.Content.csproj"/>
+    <!--    <Project Path="HordeSurvival.Ios/HordeSurvival.Ios.csproj" />-->
+    <Project Path="HordeSurvival.WindowsDX12/HordeSurvival.WindowsDX12.csproj"/>
+</Solution>

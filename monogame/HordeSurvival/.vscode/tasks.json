@@ -1,0 +1,70 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build: HordeSurvival.DesktopGL",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/HordeSurvival.DesktopGL/HordeSurvival.DesktopGL.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary",
+                "/tl:off"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Build: HordeSurvival.DesktopVK",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/HordeSurvival.DesktopVK/HordeSurvival.DesktopVK.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary",
+                "/tl:off"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Build: HordeSurvival.WindowsDX12",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/HordeSurvival.WindowsDX12/HordeSurvival.WindowsDX12.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary",
+                "/tl:off"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Build: HordeSurvival.Android",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/HordeSurvival.Android/HordeSurvival.Android.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary",
+                "/tl:off"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Build: HordeSurvival.iOS",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/HordeSurvival.iOS/HordeSurvival.iOS.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary",
+                "/tl:off"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

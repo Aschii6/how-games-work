@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "HordeSurvival (DesktopGL)",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/HordeSurvival.DesktopGL/HordeSurvival.DesktopGL.csproj",
+            "preLaunchTask": "Build: HordeSurvival.DesktopGL"
+        },
+        {
+            "name": "HordeSurvival (DesktopVK)",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/HordeSurvival.DesktopVK/HordeSurvival.DesktopVK.csproj",
+            "preLaunchTask": "Build: HordeSurvival.DesktopVK"
+        },
+        {
+            "name": "HordeSurvival (WindowsDX12)",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/HordeSurvival.WindowsDX12/HordeSurvival.WindowsDX12.csproj",
+            "preLaunchTask": "Build: HordeSurvival.WindowsDX12"
+        },
+        {
+            "name": "HordeSurvival (Android / iOS)",
+            "type": "maui",
+            "request": "launch",
+            "preLaunchTask": "maui: Build"
+        }
+    ]
+}

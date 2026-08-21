@@ -1,0 +1,17 @@
+# .NET build output
+bin/
+obj/
+
+# NuGet
+packages/
+
+# VS Code
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# IntelliJ
+.idea/
+
+# Visual Studio
+.vs/
