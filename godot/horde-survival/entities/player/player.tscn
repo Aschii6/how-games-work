@@ -1,10 +1,14 @@
 [gd_scene format=3 uid="uid://clemhsn8nnyny"]
 
 [ext_resource type="Texture2D" uid="uid://b5odgsja5xngl" path="res://entities/player/assets/Warrior_Idle.png" id="1_symyc"]
+[ext_resource type="Script" uid="uid://fbwpcgk6pxbw" path="res://entities/player/player.gd" id="2_abrql"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sfv1e"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bj4t2"]
 atlas = ExtResource("1_symyc")
 region = Rect2(0, 0, 192, 192)
 
-[node name="Player" type="Sprite2D" unique_id=167166178]
-texture = SubResource("AtlasTexture_sfv1e")
+[node name="Player" type="CharacterBody2D" unique_id=1342763185]
+script = ExtResource("2_abrql")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1563735106]
+texture = SubResource("AtlasTexture_bj4t2")
