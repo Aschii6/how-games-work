@@ -27,6 +27,8 @@ public class Builder : ContentBuilder
     {
         var contentCollection = new ContentCollection();
 
+        contentCollection.Include<WildcardRule>("Sprites/*.png");
+
         return contentCollection;
     }
 }

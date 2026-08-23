@@ -19,12 +19,17 @@ public class HordeSurvivalGame : Game
     public static readonly bool IsDesktop =
         OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsWindows();
 
+    private SpriteBatch _spriteBatch;
+    private Texture2D _playerTexture;
+
     /// <summary>
     /// Initializes a new instance of the game. Configures platform-specific settings.
     /// </summary>
     public HordeSurvivalGame()
     {
         _graphics = new GraphicsDeviceManager(this);
+        _graphics.PreferredBackBufferWidth = 1280;
+        _graphics.PreferredBackBufferHeight = 720;
 
         // Share GraphicsDeviceManager as a service.
         Services.AddService(_graphics);
@@ -53,6 +58,10 @@ public class HordeSurvivalGame : Game
     protected override void LoadContent()
     {
         base.LoadContent();
+
+        _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        _playerTexture = Content.Load<Texture2D>("Sprites/Warrior/Warrior_Idle");
     }
 
     /// <summary>
@@ -78,7 +87,13 @@ public class HordeSurvivalGame : Game
     /// </param>
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.MonoGameOrange);
+        GraphicsDevice.Clear(Color.DarkSlateGray);
+
+        _spriteBatch.Begin();
+
+        _spriteBatch.Draw(_playerTexture, Vector2.Zero, new Rectangle(0, 0, 192, 192), Color.White);
+
+        _spriteBatch.End();
 
         base.Draw(gameTime);
     }
