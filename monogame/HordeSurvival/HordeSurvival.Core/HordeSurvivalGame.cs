@@ -77,7 +77,9 @@ public class HordeSurvivalGame : Game
             || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        _playerPosition += new Vector2(5, 0);
+        var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        _playerPosition += new Vector2(300, 0) * dt;
 
         base.Update(gameTime);
     }
