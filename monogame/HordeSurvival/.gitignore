@@ -15,3 +15,4 @@ packages/
 
 # Visual Studio
 .vs/
+*.DotSettings.user

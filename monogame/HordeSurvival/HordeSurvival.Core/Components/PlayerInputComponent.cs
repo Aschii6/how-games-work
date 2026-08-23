@@ -21,6 +21,6 @@ public class PlayerInputComponent : ComponentBase
         if (direction != Vector2.Zero)
             direction.Normalize();
 
-        Movement.Velocity = direction * Movement.Speed;
+        Movement.TargetVelocity = direction * Movement.Speed;
     }
 }
