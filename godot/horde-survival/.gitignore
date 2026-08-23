@@ -11,6 +11,9 @@ export.cfg
 export_credentials.cfg
 *.tmp
 
+# Godot Addons
+addons/
+
 # Imported translations (automatically generated from CSV files)
 *.translation
 

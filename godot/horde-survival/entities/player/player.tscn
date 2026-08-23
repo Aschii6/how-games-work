@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://clemhsn8nnyny"]
+
+[ext_resource type="Texture2D" uid="uid://b5odgsja5xngl" path="res://entities/player/assets/Warrior_Idle.png" id="1_symyc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sfv1e"]
+atlas = ExtResource("1_symyc")
+region = Rect2(0, 0, 192, 192)
+
+[node name="Player" type="Sprite2D" unique_id=167166178]
+texture = SubResource("AtlasTexture_sfv1e")
