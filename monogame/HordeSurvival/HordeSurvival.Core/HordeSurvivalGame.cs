@@ -22,6 +22,8 @@ public class HordeSurvivalGame : Game
     private SpriteBatch _spriteBatch;
     private Texture2D _playerTexture;
     private Vector2 _playerPosition;
+    private Vector2 _playerVelocity;
+    private const float Speed = 300f;
 
     /// <summary>
     /// Initializes a new instance of the game. Configures platform-specific settings.
@@ -77,9 +79,11 @@ public class HordeSurvivalGame : Game
             || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
+        ProcessMovementInputs();
+
         var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        _playerPosition += new Vector2(300, 0) * dt;
+        _playerPosition += _playerVelocity * dt;
 
         base.Update(gameTime);
     }
@@ -101,5 +105,21 @@ public class HordeSurvivalGame : Game
         _spriteBatch.End();
 
         base.Draw(gameTime);
+    }
+
+    private void ProcessMovementInputs()
+    {
+        var playerDirection = Vector2.Zero;
+        if (Keyboard.GetState().IsKeyDown(Keys.W))
+            playerDirection.Y -= 1;
+        if (Keyboard.GetState().IsKeyDown(Keys.S))
+            playerDirection.Y += 1;
+
+        if (Keyboard.GetState().IsKeyDown(Keys.A))
+            playerDirection.X -= 1;
+        if (Keyboard.GetState().IsKeyDown(Keys.D))
+            playerDirection.X += 1;
+
+        _playerVelocity = playerDirection * Speed;
     }
 }
