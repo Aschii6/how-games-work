@@ -120,6 +120,11 @@ public class HordeSurvivalGame : Game
         if (Keyboard.GetState().IsKeyDown(Keys.D))
             playerDirection.X += 1;
 
+        if (playerDirection != Vector2.Zero)
+        {
+            playerDirection.Normalize();
+        }
+
         _playerVelocity = playerDirection * Speed;
     }
 }
