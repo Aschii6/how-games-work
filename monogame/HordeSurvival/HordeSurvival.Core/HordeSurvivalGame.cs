@@ -21,6 +21,7 @@ public class HordeSurvivalGame : Game
 
     private SpriteBatch _spriteBatch;
     private Texture2D _playerTexture;
+    private Vector2 _playerPosition;
 
     /// <summary>
     /// Initializes a new instance of the game. Configures platform-specific settings.
@@ -76,6 +77,8 @@ public class HordeSurvivalGame : Game
             || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
+        _playerPosition += new Vector2(5, 0);
+
         base.Update(gameTime);
     }
 
@@ -91,7 +94,7 @@ public class HordeSurvivalGame : Game
 
         _spriteBatch.Begin();
 
-        _spriteBatch.Draw(_playerTexture, Vector2.Zero, new Rectangle(0, 0, 192, 192), Color.White);
+        _spriteBatch.Draw(_playerTexture, _playerPosition, new Rectangle(0, 0, 192, 192), Color.White);
 
         _spriteBatch.End();
 
