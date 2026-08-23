@@ -1,4 +1,6 @@
 using System;
+using HordeSurvival.Core.Components;
+using HordeSurvival.Core.Entities;
 using HordeSurvival.Core.Localization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,10 +22,7 @@ public class HordeSurvivalGame : Game
         OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsWindows();
 
     private SpriteBatch _spriteBatch;
-    private Texture2D _playerTexture;
-    private Vector2 _playerPosition;
-    private Vector2 _playerVelocity;
-    private const float Speed = 300f;
+    private Entity _player;
 
     /// <summary>
     /// Initializes a new instance of the game. Configures platform-specific settings.
@@ -64,7 +63,17 @@ public class HordeSurvivalGame : Game
 
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        _playerTexture = Content.Load<Texture2D>("Sprites/Warrior/Warrior_Idle");
+        var playerTexture = Content.Load<Texture2D>("Sprites/Warrior/Warrior_Idle");
+
+        _player = new Entity();
+        _player.AddComponent(new TransformComponent());
+        _player.AddComponent(new PlayerInputComponent());
+        _player.AddComponent(new MovementComponent());
+        _player.AddComponent(new SpriteComponent
+        {
+            Texture = playerTexture,
+            SourceRectangle = new Rectangle(0, 0, 192, 192)
+        });
     }
 
     /// <summary>
@@ -79,11 +88,7 @@ public class HordeSurvivalGame : Game
             || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        ProcessMovementInputs();
-
-        var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        _playerPosition += _playerVelocity * dt;
+        _player.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -100,31 +105,10 @@ public class HordeSurvivalGame : Game
 
         _spriteBatch.Begin();
 
-        _spriteBatch.Draw(_playerTexture, _playerPosition, new Rectangle(0, 0, 192, 192), Color.White);
+        _player.Draw(_spriteBatch);
 
         _spriteBatch.End();
 
         base.Draw(gameTime);
-    }
-
-    private void ProcessMovementInputs()
-    {
-        var playerDirection = Vector2.Zero;
-        if (Keyboard.GetState().IsKeyDown(Keys.W))
-            playerDirection.Y -= 1;
-        if (Keyboard.GetState().IsKeyDown(Keys.S))
-            playerDirection.Y += 1;
-
-        if (Keyboard.GetState().IsKeyDown(Keys.A))
-            playerDirection.X -= 1;
-        if (Keyboard.GetState().IsKeyDown(Keys.D))
-            playerDirection.X += 1;
-
-        if (playerDirection != Vector2.Zero)
-        {
-            playerDirection.Normalize();
-        }
-
-        _playerVelocity = playerDirection * Speed;
     }
 }
