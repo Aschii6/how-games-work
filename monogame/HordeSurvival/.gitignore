@@ -13,6 +13,8 @@ packages/
 # IntelliJ
 .idea/
 
+# ReSharper / Rider
+*.DotSettings.user
+
 # Visual Studio
 .vs/
-*.DotSettings.user
