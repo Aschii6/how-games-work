@@ -68,9 +68,9 @@ public class HordeSurvivalGame : Game
         var playerIdleTexture = Content.Load<Texture2D>("Sprites/Warrior/Warrior_Idle");
 
         _player = new Entity();
-        _player.AddComponent(new TransformComponent());
-        _player.AddComponent(new PlayerInputComponent());
-        _player.AddComponent(new MovementComponent());
+        var transform = _player.AddComponent(new TransformComponent());
+        var movement = _player.AddComponent(new MovementComponent(transform, 300f, 1f / 3f));
+        _player.AddComponent(new PlayerInputComponent(movement));
 
         Dictionary<string, Animation> animations = new();
 
@@ -82,7 +82,7 @@ public class HordeSurvivalGame : Game
 
         animations.Add("idle", idleAnimation);
 
-        _player.AddComponent(new AnimatedSpriteComponent(animations, "idle"));
+        _player.AddComponent(new AnimatedSpriteComponent(transform, animations, "idle"));
     }
 
     /// <summary>

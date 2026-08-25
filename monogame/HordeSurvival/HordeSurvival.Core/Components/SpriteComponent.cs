@@ -5,14 +5,20 @@ namespace HordeSurvival.Core.Components;
 
 public class SpriteComponent : ComponentBase
 {
-    public Texture2D Texture;
-    public Rectangle SourceRectangle;
+    private Texture2D _texture;
+    private Rectangle _sourceRectangle;
 
-    private TransformComponent _transform;
-    private TransformComponent Transform => _transform ??= Owner.GetComponent<TransformComponent>();
+    private readonly TransformComponent _transform;
+
+    public SpriteComponent(TransformComponent transform, Texture2D texture, Rectangle sourceRectangle)
+    {
+        _transform = transform;
+        _texture = texture;
+        _sourceRectangle = sourceRectangle;
+    }
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(Texture, Transform.Position, SourceRectangle, Color.White);
+        spriteBatch.Draw(_texture, _transform.Position, _sourceRectangle, Color.White);
     }
 }

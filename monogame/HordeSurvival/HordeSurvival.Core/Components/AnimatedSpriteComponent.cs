@@ -8,18 +8,18 @@ namespace HordeSurvival.Core.Components;
 
 public class AnimatedSpriteComponent : ComponentBase
 {
-    private TransformComponent _transform;
-    private TransformComponent Transform => _transform ??= Owner.GetComponent<TransformComponent>();
+    private readonly TransformComponent _transform;
 
     private readonly Dictionary<string, Animation> _animations;
 
     private Animation _currentAnimation;
 
-    public AnimatedSpriteComponent(Dictionary<string, Animation> animations, string name)
+    public AnimatedSpriteComponent(TransformComponent transform, Dictionary<string, Animation> animations, string name)
     {
         if (!animations.ContainsKey(name))
             throw new ArgumentException($"Animation {name} does not exist");
 
+        _transform = transform;
         _animations = animations;
         _currentAnimation = animations[name];
     }
@@ -41,6 +41,6 @@ public class AnimatedSpriteComponent : ComponentBase
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(_currentAnimation.Texture, Transform.Position, _currentAnimation.CurrentFrame, Color.White);
+        spriteBatch.Draw(_currentAnimation.Texture, _transform.Position, _currentAnimation.CurrentFrame, Color.White);
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace HordeSurvival.Core.Components;
 
-public abstract class ComponentBase : IComponent
+public abstract class ComponentBase
 {
     public Entity Owner { get; set; }
 

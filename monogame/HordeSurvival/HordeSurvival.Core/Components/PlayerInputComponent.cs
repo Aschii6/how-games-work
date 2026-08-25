@@ -5,8 +5,12 @@ namespace HordeSurvival.Core.Components;
 
 public class PlayerInputComponent : ComponentBase
 {
-    private MovementComponent _movement;
-    private MovementComponent Movement => _movement ??= Owner.GetComponent<MovementComponent>();
+    private readonly MovementComponent _movement;
+
+    public PlayerInputComponent(MovementComponent movement)
+    {
+        _movement = movement;
+    }
 
     public override void Update(GameTime gameTime)
     {
@@ -21,6 +25,6 @@ public class PlayerInputComponent : ComponentBase
         if (direction != Vector2.Zero)
             direction.Normalize();
 
-        Movement.TargetVelocity = direction * Movement.Speed;
+        _movement.TargetVelocity = direction * _movement.MaxSpeed;
     }
 }

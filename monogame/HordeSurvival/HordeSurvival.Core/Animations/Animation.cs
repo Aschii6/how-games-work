@@ -14,19 +14,19 @@ public class Animation
     // Possible to use another class instead of Rectangles, if I want to handle different textures per frame
     private readonly List<Rectangle> _frames = [];
 
-    private readonly float _frameTime;
+    private readonly float _secondsPerFrame;
     private readonly bool _isLooping;
     private int _currentFrameIndex = 0;
     private float _timeSinceLastFrame = 0f;
 
-    public Animation(Texture2D texture, int animationSpeed, bool isLooping = false)
+    public Animation(Texture2D texture, int framesPerSecond, bool isLooping = false)
     {
-        if (animationSpeed < 1)
+        if (framesPerSecond < 1)
             throw new ArgumentException("Animation speed must be greater than or equal to 1.");
 
         Texture = texture;
         _isLooping = isLooping;
-        _frameTime = 1 / (float)animationSpeed;
+        _secondsPerFrame = 1 / (float)framesPerSecond;
     }
 
     public void AddFrame(Rectangle frame)
@@ -44,8 +44,8 @@ public class Animation
     {
         _timeSinceLastFrame += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        _currentFrameIndex += (int)(_timeSinceLastFrame / _frameTime);
-        _timeSinceLastFrame %= _frameTime;
+        _currentFrameIndex += (int)(_timeSinceLastFrame / _secondsPerFrame);
+        _timeSinceLastFrame %= _secondsPerFrame;
 
         if (_isLooping)
             _currentFrameIndex %= _frames.Count;

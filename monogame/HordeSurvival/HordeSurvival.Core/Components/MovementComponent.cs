@@ -7,11 +7,19 @@ public class MovementComponent : ComponentBase
 {
     public Vector2 Velocity;
     public Vector2 TargetVelocity;
-    public float Speed = 300f;
-    public float Acceleration => Speed * 3f;
 
-    private TransformComponent _transform;
-    private TransformComponent Transform => _transform ??= Owner.GetComponent<TransformComponent>();
+    public float MaxSpeed { get; set; }
+    public float TimeToMaxSpeed { get; set; }
+    private float Acceleration => MaxSpeed / TimeToMaxSpeed;
+
+    private readonly TransformComponent _transform;
+
+    public MovementComponent(TransformComponent transform, float maxSpeed, float timeToMaxSpeed)
+    {
+        _transform = transform;
+        MaxSpeed = maxSpeed;
+        TimeToMaxSpeed = timeToMaxSpeed;
+    }
 
     public override void Update(GameTime gameTime)
     {
@@ -19,6 +27,6 @@ public class MovementComponent : ComponentBase
 
         Velocity = Velocity.MoveTowards(TargetVelocity, Acceleration * dt);
 
-        Transform.Position += Velocity * dt;
+        _transform.Position += Velocity * dt;
     }
 }
