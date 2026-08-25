@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using HordeSurvival.Core.Animations;
 using HordeSurvival.Core.Components;
 using HordeSurvival.Core.Entities;
 using HordeSurvival.Core.Localization;
@@ -63,17 +65,24 @@ public class HordeSurvivalGame : Game
 
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        var playerTexture = Content.Load<Texture2D>("Sprites/Warrior/Warrior_Idle");
+        var playerIdleTexture = Content.Load<Texture2D>("Sprites/Warrior/Warrior_Idle");
 
         _player = new Entity();
         _player.AddComponent(new TransformComponent());
         _player.AddComponent(new PlayerInputComponent());
         _player.AddComponent(new MovementComponent());
-        _player.AddComponent(new SpriteComponent
+
+        Dictionary<string, Animation> animations = new();
+
+        var idleAnimation = new Animation(playerIdleTexture, 10, true);
+        for (int i = 0; i < 8; i++)
         {
-            Texture = playerTexture,
-            SourceRectangle = new Rectangle(0, 0, 192, 192)
-        });
+            idleAnimation.AddFrame(new Rectangle(192 * i, 0, 192, 192));
+        }
+
+        animations.Add("idle", idleAnimation);
+
+        _player.AddComponent(new AnimatedSpriteComponent(animations, "idle"));
     }
 
     /// <summary>
