@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using HordeSurvival.Core.Animations;
-using HordeSurvival.Core.Components;
 using HordeSurvival.Core.Entities;
 using HordeSurvival.Core.Localization;
 using Microsoft.Xna.Framework;
@@ -24,7 +21,7 @@ public class HordeSurvivalGame : Game
         OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsWindows();
 
     private SpriteBatch _spriteBatch;
-    private Entity _player;
+    private Player _player;
 
     /// <summary>
     /// Initializes a new instance of the game. Configures platform-specific settings.
@@ -65,24 +62,7 @@ public class HordeSurvivalGame : Game
 
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        var playerIdleTexture = Content.Load<Texture2D>("Sprites/Warrior/Warrior_Idle");
-
-        _player = new Entity();
-        var transform = _player.AddComponent(new TransformComponent());
-        var movement = _player.AddComponent(new MovementComponent(transform, 300f, 1f / 3f));
-        _player.AddComponent(new PlayerInputComponent(movement));
-
-        Dictionary<string, Animation> animations = new();
-
-        var idleAnimation = new Animation(playerIdleTexture, 10, true);
-        for (int i = 0; i < 8; i++)
-        {
-            idleAnimation.AddFrame(new Rectangle(192 * i, 0, 192, 192));
-        }
-
-        animations.Add("idle", idleAnimation);
-
-        _player.AddComponent(new AnimatedSpriteComponent(transform, animations, "idle"));
+        _player = new Player(Content);
     }
 
     /// <summary>

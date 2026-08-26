@@ -25,13 +25,13 @@ public class Entity
         return null;
     }
 
-    public void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime)
     {
         foreach (var component in _components)
             component.Update(gameTime);
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public virtual void Draw(SpriteBatch spriteBatch)
     {
         foreach (var component in _components)
             component.Draw(spriteBatch);
