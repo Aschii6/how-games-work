@@ -11,6 +11,8 @@ public class AnimatedSpriteComponent : ComponentBase
     public bool FlipH { get; set; } = false;
     public bool FlipV { get; set; } = false;
 
+    public event Action Finished;
+
     private readonly TransformComponent _transform;
 
     private readonly Dictionary<string, Animation> _animations;
@@ -25,6 +27,7 @@ public class AnimatedSpriteComponent : ComponentBase
         _transform = transform;
         _animations = animations;
         _currentAnimation = animations[name];
+        _currentAnimation.Finished += OnCurrentAnimationFinished;
     }
 
     public void Play(string name)
@@ -33,7 +36,9 @@ public class AnimatedSpriteComponent : ComponentBase
             throw new ArgumentException($"Animation '{name}' does not exist");
         if (ReferenceEquals(animation, _currentAnimation)) return;
 
+        _currentAnimation.Finished -= OnCurrentAnimationFinished;
         _currentAnimation = animation;
+        _currentAnimation.Finished += OnCurrentAnimationFinished;
         _currentAnimation.Reset();
     }
 
@@ -55,4 +60,6 @@ public class AnimatedSpriteComponent : ComponentBase
             sourceRectangle: frame, color: Color.White, rotation: 0f, origin: origin,
             scale: Vector2.One, effects: effects, layerDepth: 0f);
     }
+
+    private void OnCurrentAnimationFinished() => Finished?.Invoke();
 }

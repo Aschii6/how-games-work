@@ -11,6 +11,8 @@ public class Animation
 
     public Rectangle CurrentFrame => _frames[_currentFrameIndex];
 
+    public event Action Finished;
+
     // Possible to use another class instead of Rectangles, if I want to handle different textures per frame
     private readonly List<Rectangle> _frames = [];
 
@@ -18,6 +20,7 @@ public class Animation
     private readonly bool _isLooping;
     private int _currentFrameIndex = 0;
     private float _timeSinceLastFrame = 0f;
+    private bool _hasFinished = false;
 
     public Animation(Texture2D texture, int framesPerSecond, bool isLooping = false)
     {
@@ -38,18 +41,27 @@ public class Animation
     {
         _currentFrameIndex = 0;
         _timeSinceLastFrame = 0f;
+        _hasFinished = false;
     }
 
     public void Update(GameTime gameTime)
     {
+        if (_hasFinished) return;
+
         _timeSinceLastFrame += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         _currentFrameIndex += (int)(_timeSinceLastFrame / _secondsPerFrame);
         _timeSinceLastFrame %= _secondsPerFrame;
 
         if (_isLooping)
+        {
             _currentFrameIndex %= _frames.Count;
-        else
-            _currentFrameIndex = Math.Min(_currentFrameIndex, _frames.Count - 1);
+        }
+        else if (_currentFrameIndex >= _frames.Count - 1)
+        {
+            _currentFrameIndex = _frames.Count - 1;
+            _hasFinished = true;
+            Finished?.Invoke();
+        }
     }
 }
