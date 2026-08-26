@@ -8,6 +8,9 @@ namespace HordeSurvival.Core.Components;
 
 public class AnimatedSpriteComponent : ComponentBase
 {
+    public bool FlipH { get; set; } = false;
+    public bool FlipV { get; set; } = false;
+
     private readonly TransformComponent _transform;
 
     private readonly Dictionary<string, Animation> _animations;
@@ -41,6 +44,15 @@ public class AnimatedSpriteComponent : ComponentBase
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(_currentAnimation.Texture, _transform.Position, _currentAnimation.CurrentFrame, Color.White);
+        var effects = SpriteEffects.None;
+        if (FlipH) effects |= SpriteEffects.FlipHorizontally;
+        if (FlipV) effects |= SpriteEffects.FlipVertically;
+
+        var frame = _currentAnimation.CurrentFrame;
+        var origin = new Vector2(frame.Width / 2f, frame.Height / 2f);
+
+        spriteBatch.Draw(texture: _currentAnimation.Texture, position: _transform.Position,
+            sourceRectangle: frame, color: Color.White, rotation: 0f, origin: origin,
+            scale: Vector2.One, effects: effects, layerDepth: 0f);
     }
 }

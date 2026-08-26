@@ -40,6 +40,11 @@ public class Player : Entity
         // Maybe check Velocity IsZeroApprox
         SetState(_movement.Velocity == Vector2.Zero ? "idle" : "run");
 
+        if (_movement.Velocity.X < 0)
+            _animatedSprite.FlipH = true;
+        else if (_movement.Velocity.X > 0)
+            _animatedSprite.FlipH = false;
+
         base.Update(gameTime);
     }
 

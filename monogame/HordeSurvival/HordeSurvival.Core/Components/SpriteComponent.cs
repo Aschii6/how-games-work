@@ -5,8 +5,11 @@ namespace HordeSurvival.Core.Components;
 
 public class SpriteComponent : ComponentBase
 {
-    private Texture2D _texture;
-    private Rectangle _sourceRectangle;
+    public bool FlipH { get; set; } = false;
+    public bool FlipV { get; set; } = false;
+
+    private readonly Texture2D _texture;
+    private readonly Rectangle _sourceRectangle;
 
     private readonly TransformComponent _transform;
 
@@ -19,6 +22,14 @@ public class SpriteComponent : ComponentBase
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(_texture, _transform.Position, _sourceRectangle, Color.White);
+        var effects = SpriteEffects.None;
+        if (FlipH) effects |= SpriteEffects.FlipHorizontally;
+        if (FlipV) effects |= SpriteEffects.FlipVertically;
+
+        var origin = new Vector2(_sourceRectangle.Width / 2f, _sourceRectangle.Height / 2f);
+
+        spriteBatch.Draw(texture: _texture, position: _transform.Position,
+            sourceRectangle: _sourceRectangle, color: Color.White, rotation: 0f, origin: origin,
+            scale: Vector2.One, effects: effects, layerDepth: 0f);
     }
 }
