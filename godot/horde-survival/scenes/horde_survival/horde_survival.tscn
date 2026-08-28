@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bdst6c404d1br"]
+
+[ext_resource type="PackedScene" uid="uid://clemhsn8nnyny" path="res://entities/player/player.tscn" id="1_ihcdb"]
+[ext_resource type="PackedScene" uid="uid://cabb5wrdti33" path="res://entities/goblin/goblin.tscn" id="2_6w2uq"]
+
+[node name="HordeSurvival" type="Node2D" unique_id=1044952753]
+
+[node name="Player" parent="." unique_id=1342763185 instance=ExtResource("1_ihcdb")]
+position = Vector2(96, 96)
+
+[node name="Goblin" parent="." unique_id=1259545599 node_paths=PackedStringArray("player") instance=ExtResource("2_6w2uq")]
+position = Vector2(400, 600)
+player = NodePath("../Player")
