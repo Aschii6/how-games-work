@@ -1,6 +1,6 @@
 using System;
-using HordeSurvival.Core.Entities;
 using HordeSurvival.Core.Localization;
+using HordeSurvival.Core.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -21,7 +21,7 @@ public class HordeSurvivalGame : Game
         OperatingSystem.IsMacOS() || OperatingSystem.IsLinux() || OperatingSystem.IsWindows();
 
     private SpriteBatch _spriteBatch;
-    private Player _player;
+    private HordeSurvivalScene _hordeSurvivalScene;
 
     /// <summary>
     /// Initializes a new instance of the game. Configures platform-specific settings.
@@ -62,7 +62,8 @@ public class HordeSurvivalGame : Game
 
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        _player = new Player(Content);
+        _hordeSurvivalScene = new HordeSurvivalScene();
+        _hordeSurvivalScene.LoadContent(Content);
     }
 
     /// <summary>
@@ -77,7 +78,7 @@ public class HordeSurvivalGame : Game
             || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        _player.Update(gameTime);
+        _hordeSurvivalScene.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -94,7 +95,7 @@ public class HordeSurvivalGame : Game
 
         _spriteBatch.Begin();
 
-        _player.Draw(_spriteBatch);
+        _hordeSurvivalScene.Draw(_spriteBatch);
 
         _spriteBatch.End();
 
