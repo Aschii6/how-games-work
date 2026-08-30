@@ -1,7 +1,11 @@
 class_name Player
 extends CharacterBody2D
 
+signal hp_changed(new_hp: float)
+
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var hitbox_shape_2d: CollisionShape2D = $HitboxComponent/CollisionShape2D
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 
 const SPEED: float = 300.0
 const ACCELERATION: float = SPEED * 3
@@ -13,10 +17,16 @@ var attack2_queued: bool = false
 var attack1_active_time: float = 0.0
 var attack1_cooldown_remaining: float = 0.0
 
+var hit_flash_tween: Tween
+
 func _ready() -> void:
 	animated_sprite_2d.animation_finished.connect(_on_animation_finished)
+	hurtbox_component.damaged.connect(_on_hurtbox_damaged)
 
 func _physics_process(delta: float) -> void:
+	hitbox_shape_2d.disabled = not (state in [State.ATTACK1, State.ATTACK2]
+		and animated_sprite_2d.frame in [2, 3])
+	
 	_update_attack_timers(delta)
 	_handle_attack_input()
 	_handle_movement(delta)
@@ -60,6 +70,16 @@ func _on_animation_finished() -> void:
 		_set_state(State.ATTACK2)
 	else:
 		_set_state(State.IDLE)
+
+func _on_hurtbox_damaged() -> void:
+	if hit_flash_tween:
+		hit_flash_tween.kill()
+	
+	hp_changed.emit(hurtbox_component.hp)
+
+	animated_sprite_2d.modulate = Color.DEEP_PINK
+	hit_flash_tween = create_tween()
+	hit_flash_tween.tween_property(animated_sprite_2d, "modulate", Color.WHITE, 0.2)
 
 func _set_state(new_state: State) -> void:
 	if state == new_state: return

@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://b1nkgeys27rtb" path="res://entities/goblin/assets/Torch_Red.png" id="1_n80xw"]
 [ext_resource type="Script" uid="uid://cc05wlqsj78ix" path="res://entities/goblin/goblin.gd" id="1_w1pob"]
+[ext_resource type="Script" uid="uid://bw3eqtib8u1qu" path="res://entities/components/hurtbox_component.gd" id="3_5svo4"]
+[ext_resource type="Script" uid="uid://c22fweteph21q" path="res://entities/components/hitbox_component.gd" id="4_jj2aj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w1pob"]
 atlas = ExtResource("1_n80xw")
@@ -154,6 +156,12 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_bj4t2"]
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5svo4"]
+radius = 55.0
+
 [node name="Goblin" type="Node2D" unique_id=1259545599]
 script = ExtResource("1_w1pob")
 
@@ -161,3 +169,25 @@ script = ExtResource("1_w1pob")
 sprite_frames = SubResource("SpriteFrames_bj4t2")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="HurtboxComponent" type="Area2D" parent="." unique_id=1528164998]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("3_5svo4")
+max_hp = 45.0
+invuln_period = 0.35
+metadata/_custom_type_script = "uid://bw3eqtib8u1qu"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1854935939]
+shape = SubResource("CircleShape2D_bj4t2")
+
+[node name="HitboxComponent" type="Area2D" parent="." unique_id=265228402]
+collision_layer = 0
+script = ExtResource("4_jj2aj")
+dmg = 5.0
+metadata/_custom_type_script = "uid://c22fweteph21q"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1821033245]
+position = Vector2(35, 0)
+shape = SubResource("CircleShape2D_5svo4")
+debug_color = Color(0.7, 0.21000001, 0, 0.41960785)
