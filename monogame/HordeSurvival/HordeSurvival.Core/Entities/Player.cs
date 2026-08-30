@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using HordeSurvival.Core.Animations;
 using HordeSurvival.Core.Components;
+using HordeSurvival.Core.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,21 +23,32 @@ public class Player : Entity
 
     private readonly MovementComponent _movement;
     private readonly AnimatedSpriteComponent _animatedSprite;
+    private readonly HitboxComponent _hitbox;
+    private readonly HurtboxComponent _hurtbox;
 
     private PlayerState _state = PlayerState.Idle;
 
     private bool _attack2Queued;
     private float _attack1ActiveTime;
     private float _attack1CooldownRemaining;
+    private float _flashTimeRemaining;
+
+    private static readonly Vector2 HitboxOffset = new(20, 10);
 
     public Player(ContentManager content)
     {
         var transform = AddComponent(new TransformComponent());
         _movement = AddComponent(new MovementComponent(transform, 300f, 1f / 3f));
         _animatedSprite = AddComponent(new AnimatedSpriteComponent(transform, LoadAnimations(content), "idle"));
+        _hurtbox = AddComponent(new HurtboxComponent(transform, new CircleShape(25), Vector2.Zero, 100, 0.5f));
+        _hitbox = AddComponent(new HitboxComponent(transform, new CircleShape(70), HitboxOffset, 20));
 
         _animatedSprite.Finished += OnAnimationFinished;
+        _hurtbox.Damaged += OnHurtboxDamaged;
     }
+
+    public HitboxComponent Hitbox => _hitbox;
+    public HurtboxComponent Hurtbox => _hurtbox;
 
     public override void Update(GameTime gameTime)
     {
@@ -47,6 +59,24 @@ public class Player : Entity
         HandleMovement(Keyboard.GetState());
 
         base.Update(gameTime);
+
+        UpdateHitbox();
+        UpdateFlash(elapsedSeconds);
+    }
+
+    private void UpdateHitbox()
+    {
+        _hitbox.Enabled = _state is PlayerState.Attack1 or PlayerState.Attack2 &&
+                          _animatedSprite.CurrentFrameIndex is 2 or 3;
+        _hitbox.Offset = new Vector2(_animatedSprite.FlipH ? -HitboxOffset.X : HitboxOffset.X, HitboxOffset.Y);
+    }
+
+    private void OnHurtboxDamaged() => _flashTimeRemaining = 0.2f;
+
+    private void UpdateFlash(float elapsedSeconds)
+    {
+        _flashTimeRemaining = MathF.Max(0, _flashTimeRemaining - elapsedSeconds);
+        _animatedSprite.Tint = Color.Lerp(Color.White, Color.DeepPink, _flashTimeRemaining / 0.2f);
     }
 
     private void UpdateAttackTimers(float elapsedSeconds)

@@ -64,6 +64,7 @@ public class HordeSurvivalGame : Game
 
         _hordeSurvivalScene = new HordeSurvivalScene();
         _hordeSurvivalScene.LoadContent(Content);
+        _hordeSurvivalScene.GameOver += Exit;
     }
 
     /// <summary>

@@ -10,6 +10,7 @@ public class Animation
     public Texture2D Texture { get; }
 
     public Rectangle CurrentFrame => _frames[_currentFrameIndex];
+    public int CurrentFrameIndex => _currentFrameIndex;
 
     public event Action Finished;
 

@@ -10,6 +10,9 @@ public class AnimatedSpriteComponent : ComponentBase
 {
     public bool FlipH { get; set; } = false;
     public bool FlipV { get; set; } = false;
+    public Color Tint { get; set; } = Color.White;
+
+    public int CurrentFrameIndex => _currentAnimation.CurrentFrameIndex;
 
     public event Action Finished;
 
@@ -57,7 +60,7 @@ public class AnimatedSpriteComponent : ComponentBase
         var origin = new Vector2(frame.Width / 2f, frame.Height / 2f);
 
         spriteBatch.Draw(texture: _currentAnimation.Texture, position: _transform.Position,
-            sourceRectangle: frame, color: Color.White, rotation: 0f, origin: origin,
+            sourceRectangle: frame, color: Tint, rotation: 0f, origin: origin,
             scale: Vector2.One, effects: effects, layerDepth: 0f);
     }
 
