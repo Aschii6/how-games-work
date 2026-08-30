@@ -72,4 +72,8 @@ func _set_state(new_state: State) -> void:
 	if state == new_state: return
 	
 	state = new_state
+
+	if state == State.ATTACK:
+		hitbox_shape_2d.position.x = absf(hitbox_shape_2d.position.x) * (-1.0 if animated_sprite_2d.flip_h else 1.0)
+
 	animated_sprite_2d.play(State.keys()[state].to_lower())

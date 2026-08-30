@@ -90,4 +90,7 @@ func _set_state(new_state: State) -> void:
 		attack1_active_time = 0.0
 		attack2_queued = false
 
+	if state in [State.ATTACK1, State.ATTACK2]:
+		hitbox_shape_2d.position.x = absf(hitbox_shape_2d.position.x) * (-1.0 if animated_sprite_2d.flip_h else 1.0)
+
 	animated_sprite_2d.play(State.keys()[state].to_lower())
