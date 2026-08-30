@@ -28,6 +28,7 @@ public class Builder : ContentBuilder
         var contentCollection = new ContentCollection();
 
         contentCollection.Include<WildcardRule>("Sprites/*.png");
+        contentCollection.Include<WildcardRule>("Fonts/*.spritefont");
 
         return contentCollection;
     }
