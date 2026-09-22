@@ -75,8 +75,9 @@ public class Goblin : Entity
         if (_state == GoblinState.Attack) return;
 
         var playerPos = _player.GetComponent<TransformComponent>().Position;
-        var direction = Vector2.Normalize(playerPos - _transform.Position);
-        var distance = (playerPos - _transform.Position).Length();
+        var toPlayer = playerPos - _transform.Position;
+        var distance = toPlayer.Length();
+        var direction = distance > 0 ? toPlayer / distance : Vector2.Zero;
 
         if (distance < 64)
         {

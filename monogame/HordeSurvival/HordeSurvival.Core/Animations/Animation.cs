@@ -58,7 +58,7 @@ public class Animation
         {
             _currentFrameIndex %= _frames.Count;
         }
-        else if (_currentFrameIndex >= _frames.Count - 1)
+        else if (_currentFrameIndex >= _frames.Count)
         {
             _currentFrameIndex = _frames.Count - 1;
             _hasFinished = true;

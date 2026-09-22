@@ -100,6 +100,8 @@ public class HordeSurvivalScene
         foreach (var goblin in _goblins.ToArray())
         {
             CombatSystem.TryHit(_player.Hitbox, goblin.Hurtbox);
+            if (goblin.Hurtbox.Hp <= 0) continue;
+
             CombatSystem.TryHit(goblin.Hitbox, _player.Hurtbox);
         }
     }
